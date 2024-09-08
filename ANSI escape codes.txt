@@ -1,0 +1,222 @@
+﻿Example : 
+fmt.Print(Red, Replace[inputrune][i], Reset)
+
+
+ANSII ESCAPE CODES : 
+
+Text Colors
+* Black: \033[30m
+* Red: \033[31m
+* Green: \033[32m
+* Yellow: \033[33m
+* Blue: \033[34m
+* Magenta: \033[35m
+* Cyan: \033[36m
+* White: \033[37m
+Background Colors
+* Black: \033[40m
+* Red: \033[41m
+* Green: \033[42m
+* Yellow: \033[43m
+* Blue: \033[44m
+* Magenta: \033[45m
+* Cyan: \033[46m
+* White: \033[47m
+Reset Code
+* Reset: \033[0m
+
+
+
+* Full List of ANSI Codes
+
+a more comprehensive list of ANSI codes for text formatting:
+
+Text Attributes
+* Bold: \033[1m
+* Dim: \033[2m
+* Italic: \033[3m
+* Underline: \033[4m
+* Blink: \033[5m
+* Reverse: \033[7m
+* Hidden: \033[8m
+
+Foreground Colors
+* Default: \033[39m
+* Black: \033[30m
+* Red: \033[31m
+* Green: \033[32m
+* Yellow: \033[33m
+* Blue: \033[34m
+* Magenta: \033[35m
+* Cyan: \033[36m
+* Light Gray: \033[37m
+* Dark Gray: \033[90m
+* Light Red: \033[91m
+* Light Green: \033[92m
+* Light Yellow: \033[93m
+* Light Blue: \033[94m
+* Light Magenta: \033[95m
+* Light Cyan: \033[96m
+* White: \033[97m
+
+Background Colors
+* Default: \033[49m
+* Black: \033[40m
+* Red: \033[41m
+* Green: \033[42m
+* Yellow: \033[43m
+* Blue: \033[44m
+* Magenta: \033[45m
+* Cyan: \033[46m
+* Light Gray: \033[47m
+* Dark Gray: \033[100m
+* Light Red: \033[101m
+* Light Green: \033[102m
+* Light Yellow: \033[103m
+* Light Blue: \033[104m
+* Light Magenta: \033[105m
+* Light Cyan: \033[106m
+* White: \033[107m
+
+
+RGB Color Codes
+
+
+Shades of Red
+* Light Red: \033[38;2;255;102;102m
+* Dark Red: \033[38;2;139;0;0m
+* Crimson: \033[38;2;220;20;60m
+* Firebrick: \033[38;2;178;34;34m
+
+Shades of Green
+* Light Green: \033[38;2;144;238;144m
+* Dark Green: \033[38;2;0;100;0m
+* Lime Green: \033[38;2;50;205;50m
+* Forest Green: \033[38;2;34;139;34m
+
+Shades of Blue
+* Light Blue: \033[38;2;173;216;230m
+* Dark Blue: \033[38;2;0;0;139m
+* Sky Blue: \033[38;2;135;206;235m
+* Royal Blue: \033[38;2;65;105;225m
+
+Shades of Yellow
+* Light Yellow: \033[38;2;255;255;224m
+* Dark Goldenrod: \033[38;2;184;134;11m
+* Gold: \033[38;2;255;215;0m
+* Khaki: \033[38;2;240;230;140m
+
+Shades of Purple
+* Lavender: \033[38;2;230;230;250m
+* Dark Magenta: \033[38;2;139;0;139m
+* Orchid: \033[38;2;218;112;214m
+* Plum: \033[38;2;221;160;221m
+
+Shades of Gray
+* Light Gray: \033[38;2;211;211;211m
+* Dark Gray: \033[38;2;169;169;169m
+* Dim Gray: \033[38;2;105;105;105m
+* Slate Gray: \033[38;2;112;128;144m
+
+Shades of Orange
+Light Orange: \033[38;2;255;200;100m
+Dark Orange: \033[38;2;255;140;0m
+Coral: \033[38;2;255;127;80m
+Orange Red: \033[38;2;255;69;0m
+
+Shades of Pink
+Light Pink: \033[38;2;255;182;193m
+Hot Pink: \033[38;2;255;105;180m
+Deep Pink: \033[38;2;255;20;147m
+Pale Violet Red: \033[38;2;219;112;147m
+
+Additional Colors
+Teal: \033[38;2;0;128;128m
+Turquoise: \033[38;2;64;224;208m
+Peach Puff: \033[38;2;255;218;185m
+Salmon: \033[38;2;250;128;114m
+
+Shades of Orange (Continued)
+Dark Salmon: \033[38;2;233;150;122m
+Tomato: \033[38;2;255;99;71m
+Orange: \033[38;2;255;165;0m
+Dark Orange: \033[38;2;255;140;0m
+
+Shades of Pink (Continued)
+Light Coral: \033[38;2;240;128;128m
+Pink: \033[38;2;255;192;203m
+Light Salmon: \033[38;2;255;160;122m
+Misty Rose: \033[38;2;255;228;225m
+
+Shades of Brown
+Sandy Brown: \033[38;2;244;164;96m
+Chocolate: \033[38;2;210;105;30m
+Saddle Brown: \033[38;2;139;69;19m
+Sienna: \033[38;2;160;82;45m
+
+Shades of Cyan
+Light Cyan: \033[38;2;224;255;255m
+Cyan: \033[38;2;0;255;255m
+Dark Cyan: \033[38;2;0;139;139m
+Aqua: \033[38;2;0;255;255m
+
+Shades of Magenta
+Magenta: \033[38;2;255;0;255m
+Fuchsia: \033[38;2;255;0;255m
+Violet: \033[38;2;238;130;238m
+Medium Orchid: \033[38;2;186;85;211m
+
+
+
+RGB TO HSL
+package main
+
+
+import (
+    "fmt"
+    "math"
+)
+
+
+func rgbToHsl(r, g, b uint8) (float64, float64, float64) {
+    rf := float64(r) / 255.0
+    gf := float64(g) / 255.0
+    bf := float64(b) / 255.0
+
+
+    max := math.Max(rf, math.Max(gf, bf))
+    min := math.Min(rf, math.Min(gf, bf))
+    h, s, l := (max+min)/2, (max+min)/2, (max+min)/2
+
+
+    if max == min {
+        h, s = 0, 0 // achromatic
+    } else {
+        d := max - min
+        s = d / (1 - math.Abs(2*l-1))
+
+
+        switch max {
+        case rf:
+            h = (gf - bf) / d
+            if gf < bf {
+                h += 6
+            }
+        case gf:
+            h = (bf-rf)/d + 2
+        case bf:
+            h = (rf-gf)/d + 4
+        }
+        h /= 6
+    }
+
+
+    return h * 360, s * 100, l * 100
+}
+
+
+func main() {
+    r, g, b := uint8(255), uint8(0), uint8(0) // Example RGB values
+    h, s, l := rgbToHsl(r, g, b)
+    fmt.Printf("HSL: (%.2f, %.2f%%, %.2f%%)\n", h, s, l)
+}
