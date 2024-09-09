@@ -17,7 +17,7 @@ var (
 
 func ArgsManagement() (string, string, string, string, []string) {
 	args := os.Args[1:]
-	if len(args) == 0 || len(args) > 4 {
+	if len(args) == 0 || len(args) > 6 {
 		log.Fatal("Usage: go run . [OUTPUT] [ALIGN] [STRING] [BANNER]\n\nEX: go run . --output=<fileName.txt> --align=center something standard")
 	}
 
@@ -27,73 +27,56 @@ func ArgsManagement() (string, string, string, string, []string) {
 	filename := "--output=result.txt"
 	align := "--align=left"
 	input := ""
-
-	if len(args) == 1 {
-		args = append(args, filename, Banner, align)
-		input = args[0]
-		filename = args[1]
-		Banner = args[2]
-		align = args[3]
-
-	} else if len(args) == 2 && strings.HasPrefix(args[0], "--output=") {
-		args = append(args, Banner, align)
-		filename = args[0]
-		input = args[1]
-		Banner = args[2]
-		align = args[3]
-
-	} else if len(args) == 2 && (args[1] == "standard.txt" || args[1] == "shadow.txt" || args[1] == "thinkertoy.txt" || args[1] == "standard" || args[1] == "shadow" || args[1] == "thinkertoy") {
-		args = append(args, filename, align)
-		input = args[0]
-		Banner = args[1]
-		filename = args[2]
-		align = args[3]
-
-	} else if len(args) == 2 && strings.HasPrefix(args[0], "--align=") {
-		args = append(args, Banner, filename)
-		align = args[0]
-		input = args[1]
-		Banner = args[2]
-		filename = args[3]
-	} else if len(args) == 3 && strings.HasPrefix(args[0], "--align=") && (args[2] == "standard.txt" || args[2] == "shadow.txt" || args[2] == "thinkertoy.txt" || args[2] == "standard" || args[2] == "shadow" || args[2] == "thinkertoy") {
-		args = append(args, filename)
-		align = args[0]
-		input = args[1]
-		Banner = args[2]
-		filename = args[3]
-	} else if len(args) == 3 && strings.HasPrefix(args[0], "--output=") && (args[2] == "standard.txt" || args[2] == "shadow.txt" || args[2] == "thinkertoy.txt" || args[2] == "standard" || args[2] == "shadow" || args[2] == "thinkertoy") {
-		args = append(args, align)
-		filename = args[0]
-		input = args[1]
-		Banner = args[2]
-		align = args[3]
-
-	} else if len(args) == 3 && strings.HasPrefix(args[0], "--output=") && strings.HasPrefix(args[1], "--align=") {
-		args = append(args, Banner)
-		filename = args[0]
-		align = args[1]
-		input = args[2]
-		Banner = args[3]
-	} else if len(args) == 3 && strings.HasPrefix(args[0], "--align=") && strings.HasPrefix(args[1], "-output=") {
-		args = append(args, Banner)
-		align = args[0]
-		filename = args[1]
-		input = args[2]
-		Banner = args[3]
-	} else if len(args) == 4 && strings.HasPrefix(args[0], "--align=") {
-		align = args[0]
-		filename = args[1]
-		input = args[2]
-		Banner = args[3]
-	} else if len(args) == 4 && strings.HasPrefix(args[0], "--output=") {
-		filename = args[0]
-		align = args[1]
-		input = args[2]
-		Banner = args[3]
-
-	} else {
-		log.Fatal("Usage: go run . [OUTPUT] [ALIGN] [STRING] [BANNER]\n\nEX: go run . --output=<fileName.txt> --align=center something standard\nyou can start with either the name of the output file or the alignment\nmake sure to respect the for of the alignment and the output file name\nif you don't input any of these parameters a default value will be assigned")
+	substring := ""
+	color := ""
+	var alignexists, outputexists, colorexists, bannerexists bool
+	var index int
+	for i := 0; i < len(args); i++ {
+		if i != len(args)-1 && strings.HasPrefix(args[i], "--align=") {
+			align = args[i]
+			alignexists = true
+		} else if i != len(args)-1 && strings.HasPrefix(args[i], "--output=") {
+			filename = args[i]
+			outputexists = true
+		} else if i != len(args)-1 && strings.HasPrefix(args[i], "--color=") {
+			color = args[i]
+			colorexists = true
+			index = i
+		} else if args[len(args)-1] == "standard.txt" || args[len(args)-1] == "shadow.txt" || args[len(args)-1] == "thinkertoy.txt" || args[len(args)-1] == "standard" || args[len(args)-1] == "shadow" || args[len(args)-1] == "thinkertoy" {
+			Banner = args[len(args)-1]
+			bannerexists = true
+		}
 	}
+
+	if alignexists && outputexists && colorexists && bannerexists {
+		if len(args) == 5 {
+			input = args[len(args)-2]
+		} else if len(args) == 6 {
+			input = args[len(args)-2]
+			substring = args[index+1]
+		}
+	} else if alignexists && outputexists && colorexists && !bannerexists {
+		if len(args) == 4 {
+			input = args[len(args)-1]
+		} else if len(args) == 5 {
+			input = args[len(args)-1]
+			substring = args[index+1]
+		}
+	} else if alignexists && outputexists && bannerexists && !colorexists {
+	} else if alignexists && colorexists && bannerexists && !outputexists {
+	} else if outputexists && colorexists && bannerexists && !alignexists {
+	} else if outputexists && colorexists && !bannerexists && !alignexists {
+	} else if outputexists && bannerexists && !colorexists && !alignexists {
+	} else if alignexists && bannerexists && !colorexists && !outputexists {
+	} else if alignexists && colorexists && !bannerexists && !outputexists {
+	} else if colorexists && bannerexists && !alignexists && !outputexists {
+	} else if outputexists && alignexists && !colorexists && !bannerexists {
+	} else if outputexists && !colorexists && !bannerexists && !alignexists {
+	} else if alignexists && !colorexists && !bannerexists && !outputexists {
+	} else if bannerexists && !colorexists && !alignexists && !outputexists {
+	} else if colorexists && !alignexists && !bannerexists && !outputexists {
+	}
+
 	if !strings.HasSuffix(Banner, ".txt") {
 		Banner = Banner + ".txt"
 	}
