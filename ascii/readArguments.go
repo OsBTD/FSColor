@@ -17,7 +17,7 @@ var (
 	substring  string
 )
 
-func ArgsManagement() (string, string, string, string, []string) {
+func ArgsManagement() (string, string, string, string, string, string, []string) {
 	args := os.Args[1:]
 	if len(args) == 0 || len(args) > 6 {
 		log.Fatal("Usage: go run . [OUTPUT] [ALIGN] [STRING] [BANNER]\n\nEX: go run . --output=<fileName.txt> --align=center something standard")
@@ -215,5 +215,5 @@ func ArgsManagement() (string, string, string, string, []string) {
 
 	filename = strings.TrimPrefix(filename, "--output=")
 
-	return filename, align, Banner, input, inputsplit
+	return filename, align, Banner, color, substring, input, inputsplit
 }

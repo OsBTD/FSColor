@@ -9,7 +9,7 @@ import (
 var Lines []string
 
 func ReadText(string) []string {
-	_, _, Banner, _, _ = ArgsManagement()
+	_, _, Banner, _, _,_,_ = ArgsManagement()
 	// here we read the text file containing the ascii art characters
 	content, err := os.ReadFile("ascii/Banner/" + Banner)
 	if err != nil {

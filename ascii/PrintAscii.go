@@ -6,9 +6,9 @@ import (
 	"os"
 )
 
-func PrintArt(string, string, string, []string, map[rune]([]string)) {
+func PrintArt(string, string, string, []string, map[rune]([]string)) string {
 	TerminalLength, AsciiLength, NoSpaces, countspace = CalculateLength()
-	filename, align, Banner, input, inputsplit = ArgsManagement()
+	filename, align, Banner,_,_, input, inputsplit = ArgsManagement()
 
 	var result string
 	// we start by checking if the user input only contains literal newlines
@@ -90,4 +90,6 @@ func PrintArt(string, string, string, []string, map[rune]([]string)) {
 	if err != nil {
 		log.Fatal("Error writing to file : ", err)
 	}
+
+	return result
 }
