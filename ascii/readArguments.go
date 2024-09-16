@@ -255,6 +255,7 @@ func ArgsManagement() (string, string, string, string, string, string, []string,
 			substr = true
 		} else {
 			substr = false
+			inputsubstr = ""
 		}
 	}
 

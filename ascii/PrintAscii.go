@@ -17,12 +17,6 @@ func PrintArt() string {
 	// if so we print newlines accordingly
 	for idx, line := range inputsplit {
 
-		for i := 0; i < len(line); i++ {
-			if substringexists && line[i:len(inputsubstr)] != inputsubstr {
-				color = Reset
-			}
-		}
-
 		// also if there's empty strings resulting from the spliting we print a newline
 		if Checknewline(inputsplit) && idx != len(inputsplit)-1 {
 			result += "\n"
@@ -32,6 +26,18 @@ func PrintArt() string {
 			result += "\n"
 			fmt.Println()
 		} else if len(line) != 0 && !Checknewline(inputsplit) {
+			for i := 0; i+len(inputsubstr)-1 < len(line); i++ {
+				if substringexists && line[i:len(inputsubstr)] == inputsubstr {
+					fmt.Print("TTTT")
+
+					break
+				} else if substringexists && line[i:len(inputsubstr)] != inputsubstr {
+					color = Reset
+				} else {
+					continue
+				}
+			}
+
 			if align == "--align=left" {
 				for i := 0; i < 8; i++ {
 					for j := 0; j < len(line); j++ {
