@@ -6,7 +6,7 @@ func Populate() map[rune]([]string) {
 	// this map will associate between normal characters with ascii art characters from the text file
 	Replace = map[rune]([]string){}
 	//we get the style the user chose in Banner, while Lines is the the whole text file split by newline characters
-	_, _, Banner,_,_, _, _ = ArgsManagement()
+	_, _, Banner, _, _, _, _, _, _,_ = ArgsManagement()
 	Lines = ReadText(Banner)
 	//char will be the keys of the map and will go from 32 ' ' to 126 '~' so all ascii printable characters
 	Char := 32

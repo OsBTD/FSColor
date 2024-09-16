@@ -1,5 +1,10 @@
 package ascii
 
+import (
+	"fmt"
+	"strings"
+)
+
 var (
 	// Ansii Colors
 	Reset   = "\033[0m"
@@ -78,3 +83,45 @@ var (
 	PeachPuff = "\033[38;2;255;218;185m"
 	Salmon    = "\033[38;2;250;128;114m"
 )
+
+func Color() string {
+	_, _, _, color, _, _, _, _, _,_ = ArgsManagement()
+	if strings.EqualFold(color, "Reset") {
+		color = Reset
+	} else if strings.EqualFold(color, "Red") {
+		color = Red
+	} else if strings.EqualFold(color, "Green") {
+		color = Green
+	} else if strings.EqualFold(color, "Yellow") {
+		color = Yellow
+
+	} else if strings.EqualFold(color, "Blue") {
+		color = Blue
+
+	} else if strings.EqualFold(color, "Magenta") {
+		color = Magenta
+	} else if strings.EqualFold(color, "Cyan") {
+		color = Cyan
+	} else if strings.EqualFold(color, "White") {
+		color = White
+	} else if strings.EqualFold(color, "Black") {
+		color = Black
+	}
+
+	// else if strings.EqualFold(color, "LightRed") {
+	// } else if strings.EqualFold(color, "DarkRed") {
+	// } else if strings.EqualFold(color, "Crimson") {
+	// } else if strings.EqualFold(color, "Firebrick") {
+	// } else if strings.EqualFold(color, "LightGreen") {
+	// } else if strings.EqualFold(color, "DarkGreen") {
+	// } else if strings.EqualFold(color, "LimeGreen") {
+	// } else if strings.EqualFold(color, "ForestGreen") {
+	// } else if strings.EqualFold(color, "LightBlue") {
+	// } else if strings.EqualFold(color, "DarkBlue") {
+	// } else if strings.EqualFold(color, "SkyBlue") {
+	// } else if strings.EqualFold(color, "RoyalBlue") {
+	// } else if strings.EqualFold(color, "LightYellow") {
+	// }
+	fmt.Println("color in colorfunc is :", color)
+	return color
+}
