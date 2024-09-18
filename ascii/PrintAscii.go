@@ -26,7 +26,7 @@ func PrintArt() string {
 				return line
 			} else {
 				before = line[:index]
-				middle = "é" + substring + "ç"
+				middle = substring
 				after = line[index+len(substring):]
 			}
 			fmt.Println("before is : ", before, "middle is : ", middle, "after is : ", after)
@@ -43,15 +43,32 @@ func PrintArt() string {
 		} else if len(line) != 0 && !Checknewline(inputsplit) {
 			if align == "--align=left" {
 				for i := 0; i < 8; i++ {
-					for j := 0; j < len(line); j++ {
-						if string(line[j]) == "ç" {
-							color = Reset
+					for j := 0; j < len(before); j++ {
+						if before == "" {
+							continue
+						} else {
+							inputrune := rune(before[j])
+							result += Replace[inputrune][i]
+							fmt.Print(Reset, Replace[inputrune][i], Reset)
+
 						}
-						inputrune := rune(line[j])
+					}
+					for j := 0; j < len(middle); j++ {
+						inputrune := rune(middle[j])
 						result += Replace[inputrune][i]
 						fmt.Print(color, Replace[inputrune][i], Reset)
-
 					}
+					for j := 0; j < len(after); j++ {
+						if after == "" {
+							continue
+						} else {
+							inputrune := rune(after[j])
+							result += Replace[inputrune][i]
+							fmt.Print(Reset, Replace[inputrune][i], Reset)
+
+						}
+					}
+
 					// after each line is printed we print a newline
 					result += "\n"
 					fmt.Println()
