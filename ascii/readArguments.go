@@ -21,7 +21,7 @@ var (
 )
 
 func ArgsManagement() (string, string, string, string, string, string, []string, string, bool) {
-	args := os.Args[1:]
+	args = os.Args[1:]
 	if len(args) == 0 || len(args) > 6 {
 		log.Fatal("Usage: go run . [alignment] [output] [color] [substring] [STRING] [BANNER]\n\nEX: go run . --align=center --output=<fileName.txt> --color=red substring something standard")
 	}
@@ -31,7 +31,7 @@ func ArgsManagement() (string, string, string, string, string, string, []string,
 	Banner := "standard.txt"
 	filename := "--output=result.txt"
 	align := "--align=left"
-	input := ""
+	input = ""
 	var alignexists, outputexists, colorexists, bannerexists bool
 	var index int
 	for i := 0; i < len(args); i++ {
@@ -292,6 +292,6 @@ func ArgsManagement() (string, string, string, string, string, string, []string,
 
 	filename = strings.TrimPrefix(filename, "--output=")
 	color = strings.TrimPrefix(color, "--color=")
-	fmt.Println("color in args is :", color, "substring in args is :", substring, "inputsubstr in args is :", inputsubstr, colorexists, len(args))
+	fmt.Println("color in args is :", color, "substring in args is :", substring, "inputsubstr in args is :", inputsubstr, colorexists, len(args), "\nalign is :", align, alignexists, outputexists, colorexists, substringexists, bannerexists)
 	return filename, align, Banner, color, substring, input, inputsplit, inputsubstr, substringexists
 }

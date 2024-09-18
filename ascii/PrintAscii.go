@@ -10,7 +10,7 @@ import (
 
 func PrintArt() string {
 	TerminalLength, AsciiLength, NoSpaces, countspace = CalculateLength()
-	filename, align, Banner, _, _, input, inputsplit, inputsubstr, substringexists = ArgsManagement()
+	filename, align, Banner, _, _, input, inputsplit, _, substringexists = ArgsManagement()
 	color := Color()
 
 	var result string
@@ -21,9 +21,9 @@ func PrintArt() string {
 		if substringexists {
 			index := strings.Index(line, substring)
 
-			if index == -1 {
-				fmt.Println("Error : substring wasn't found in the text")
-				return line
+			if index == -1 || !substringexists {
+				fmt.Println("Error : the substring wasn't found in the text")
+				before, middle, after = line, "", ""
 			} else {
 				before = line[:index]
 				middle = substring
@@ -82,12 +82,32 @@ func PrintArt() string {
 
 					}
 
-					for j := 0; j < len(line); j++ {
-						inputrune := rune(line[j])
+					for j := 0; j < len(before); j++ {
+						if before == "" {
+							continue
+						} else {
+							inputrune := rune(before[j])
+							result += Replace[inputrune][i]
+							fmt.Print(Reset, Replace[inputrune][i], Reset)
+
+						}
+					}
+					for j := 0; j < len(middle); j++ {
+						inputrune := rune(middle[j])
 						result += Replace[inputrune][i]
 						fmt.Print(color, Replace[inputrune][i], Reset)
-
 					}
+					for j := 0; j < len(after); j++ {
+						if after == "" {
+							continue
+						} else {
+							inputrune := rune(after[j])
+							result += Replace[inputrune][i]
+							fmt.Print(Reset, Replace[inputrune][i], Reset)
+
+						}
+					}
+
 					// after each line is printed we print a newline
 					result += "\n"
 					fmt.Println()
@@ -96,24 +116,63 @@ func PrintArt() string {
 				for i := 0; i < 8; i++ {
 					for l := 0; l < (TerminalLength/2 - AsciiLength/2); l++ {
 						result += " "
-						fmt.Print(" ")
+						fmt.Print("S")
 					}
 
-					for j := 0; j < len(line); j++ {
-						inputrune := rune(line[j])
+					for j := 0; j < len(before); j++ {
+						if before == "" {
+							continue
+						} else {
+							inputrune := rune(before[j])
+							result += Replace[inputrune][i]
+							fmt.Print(Reset, Replace[inputrune][i], Reset)
+
+						}
+					}
+					for j := 0; j < len(middle); j++ {
+						inputrune := rune(middle[j])
 						result += Replace[inputrune][i]
 						fmt.Print(color, Replace[inputrune][i], Reset)
-
 					}
+					for j := 0; j < len(after); j++ {
+						if after == "" {
+							continue
+						} else {
+							inputrune := rune(after[j])
+							result += Replace[inputrune][i]
+							fmt.Print(Reset, Replace[inputrune][i], Reset)
+
+						}
+					}
+
 					// after each line is printed we print a newline
 					result += "\n"
 					fmt.Println()
 				}
 			} else if align == "--align=justify" {
 				for i := 0; i < 8; i++ {
-					for j := 0; j < len(line); j++ {
-						if line[j] != 32 {
-							inputrune := rune(line[j])
+					for j := 0; j < len(before); j++ {
+						if before == "" {
+							continue
+						} else {
+							if before[j] != 32 {
+								inputrune := rune(before[j])
+								result += Replace[inputrune][i]
+								fmt.Print(color, Replace[inputrune][i], Reset)
+
+							} else {
+								for l := 0; l < (TerminalLength-NoSpaces)/countspace; l++ {
+									result += " "
+									fmt.Print(" ")
+
+								}
+							}
+
+						}
+					}
+					for j := 0; j < len(middle); j++ {
+						if middle[j] != 32 {
+							inputrune := rune(middle[j])
 							result += Replace[inputrune][i]
 							fmt.Print(color, Replace[inputrune][i], Reset)
 
@@ -123,6 +182,25 @@ func PrintArt() string {
 								fmt.Print(" ")
 
 							}
+						}
+					}
+					for j := 0; j < len(after); j++ {
+						if after == "" {
+							continue
+						} else {
+							if after[j] != 32 {
+								inputrune := rune(after[j])
+								result += Replace[inputrune][i]
+								fmt.Print(color, Replace[inputrune][i], Reset)
+
+							} else {
+								for l := 0; l < (TerminalLength-NoSpaces)/countspace; l++ {
+									result += " "
+									fmt.Print(" ")
+
+								}
+							}
+
 						}
 					}
 
