@@ -32,7 +32,7 @@ var (
 	DarkBlue  = "\033[38;2;0;0;139m"
 	SkyBlue   = "\033[38;2;135;206;235m"
 	RoyalBlue = "\033[38;2;65;105;225m"
-	// Shades of Yellow
+	// Shades of Yellow         ////////////////////////////////////////////////////////////////////////////////
 	LightYellow   = "\033[38;2;255;255;224m"
 	DarkGoldenrod = "\033[38;2;184;134;11m"
 	Gold          = "\033[38;2;255;215;0m"
@@ -108,21 +108,31 @@ func Color() string {
 		color = Black
 	} else if strings.EqualFold(color, "LightRed") {
 		color = LightRed
+	} else if strings.EqualFold(color, "DarkRed") {
+		color = DarkRed
+	} else if strings.EqualFold(color, "Crimson") {
+		color = Crimson
+	} else if strings.EqualFold(color, "Firebrick") {
+		color = Firebrick
+	} else if strings.EqualFold(color, "LightGreen") {
+		color = LightGreen
+	} else if strings.EqualFold(color, "DarkGreen") {
+		color = DarkGreen
+	} else if strings.EqualFold(color, "LimeGreen") {
+		color = LimeGreen
+	} else if strings.EqualFold(color, "ForestGreen") {
+		color = ForestGreen
+	} else if strings.EqualFold(color, "LightBlue") {
+		color = LightBlue
+	} else if strings.EqualFold(color, "DarkBlue") {
+		color = DarkBlue
+	} else if strings.EqualFold(color, "SkyBlue") {
+		color = SkyBlue
+	} else if strings.EqualFold(color, "RoyalBlue") {
+		color = RoyalBlue
+	} else if strings.EqualFold(color, "LightYellow") {
+		color = LightYellow
 	}
-
-	// else if strings.EqualFold(color, "DarkRed") {
-	// } else if strings.EqualFold(color, "Crimson") {
-	// } else if strings.EqualFold(color, "Firebrick") {
-	// } else if strings.EqualFold(color, "LightGreen") {
-	// } else if strings.EqualFold(color, "DarkGreen") {
-	// } else if strings.EqualFold(color, "LimeGreen") {
-	// } else if strings.EqualFold(color, "ForestGreen") {
-	// } else if strings.EqualFold(color, "LightBlue") {
-	// } else if strings.EqualFold(color, "DarkBlue") {
-	// } else if strings.EqualFold(color, "SkyBlue") {
-	// } else if strings.EqualFold(color, "RoyalBlue") {
-	// } else if strings.EqualFold(color, "LightYellow") {
-	// }
 	fmt.Println("color in colorfunc is :", color)
 	return color
 }

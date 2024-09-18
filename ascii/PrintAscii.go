@@ -20,11 +20,11 @@ func PrintArt() string {
 	for idx, line := range inputsplit {
 		index := strings.Index(line, substring)
 		if !substringexists {
-			before, middle, after = line, "", ""
+			before, middle, after = "", line, ""
 		} else {
 			if index == -1 {
 				fmt.Println("Error : the substring wasn't found in the text")
-				before, middle, after = line, "", ""
+				before, middle, after = "", line, ""
 			} else {
 				before = line[:index]
 				middle = substring
@@ -51,7 +51,7 @@ func PrintArt() string {
 						} else {
 							inputrune := rune(before[j])
 							result += Replace[inputrune][i]
-							fmt.Print(color, Replace[inputrune][i], Reset)
+							fmt.Print(Reset, Replace[inputrune][i], Reset)
 
 						}
 					}
@@ -132,7 +132,7 @@ func PrintArt() string {
 						} else {
 							inputrune := rune(before[j])
 							result += Replace[inputrune][i]
-							fmt.Print(color, Replace[inputrune][i], Reset)
+							fmt.Print(Reset, Replace[inputrune][i], Reset)
 
 						}
 					}
