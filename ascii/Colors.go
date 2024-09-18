@@ -85,7 +85,7 @@ var (
 )
 
 func Color() string {
-	_, _, _, color, _, _, _, _, _,_ = ArgsManagement()
+	_, _, _, color, _, _, _, _, _ = ArgsManagement()
 	if strings.EqualFold(color, "Reset") {
 		color = Reset
 	} else if strings.EqualFold(color, "Red") {
@@ -106,10 +106,11 @@ func Color() string {
 		color = White
 	} else if strings.EqualFold(color, "Black") {
 		color = Black
+	} else if strings.EqualFold(color, "LightRed") {
+		color = LightRed
 	}
 
-	// else if strings.EqualFold(color, "LightRed") {
-	// } else if strings.EqualFold(color, "DarkRed") {
+	// else if strings.EqualFold(color, "DarkRed") {
 	// } else if strings.EqualFold(color, "Crimson") {
 	// } else if strings.EqualFold(color, "Firebrick") {
 	// } else if strings.EqualFold(color, "LightGreen") {

@@ -5,17 +5,32 @@ import (
 	"io"
 	"log"
 	"os"
+	"strings"
 )
 
 func PrintArt() string {
 	TerminalLength, AsciiLength, NoSpaces, countspace = CalculateLength()
-	filename, align, Banner, _, _, input, inputsplit, inputsubstr, _, substringexists = ArgsManagement()
+	filename, align, Banner, _, _, input, inputsplit, inputsubstr, substringexists = ArgsManagement()
 	color := Color()
 
 	var result string
+	var before, middle, after string
 	// we start by checking if the user input only contains literal newlines
 	// if so we print newlines accordingly
 	for idx, line := range inputsplit {
+		if substringexists {
+			index := strings.Index(line, substring)
+
+			if index == -1 {
+				fmt.Println("Error : substring wasn't found in the text")
+				return line
+			} else {
+				before = line[:index]
+				middle = "é" + substring + "ç"
+				after = line[index+len(substring):]
+			}
+			fmt.Println("before is : ", before, "middle is : ", middle, "after is : ", after)
+		}
 
 		// also if there's empty strings resulting from the spliting we print a newline
 		if Checknewline(inputsplit) && idx != len(inputsplit)-1 {
@@ -26,21 +41,12 @@ func PrintArt() string {
 			result += "\n"
 			fmt.Println()
 		} else if len(line) != 0 && !Checknewline(inputsplit) {
-			for i := 0; i+len(inputsubstr)-1 < len(line); i++ {
-				if substringexists && line[i:len(inputsubstr)] == inputsubstr {
-					fmt.Print("TTTT")
-
-					break
-				} else if substringexists && line[i:len(inputsubstr)] != inputsubstr {
-					color = Reset
-				} else {
-					continue
-				}
-			}
-
 			if align == "--align=left" {
 				for i := 0; i < 8; i++ {
 					for j := 0; j < len(line); j++ {
+						if string(line[j]) == "ç" {
+							color = Reset
+						}
 						inputrune := rune(line[j])
 						result += Replace[inputrune][i]
 						fmt.Print(color, Replace[inputrune][i], Reset)
@@ -55,10 +61,13 @@ func PrintArt() string {
 				for i := 0; i < 8; i++ {
 					for l := 0; l < (TerminalLength - AsciiLength); l++ {
 						result += " "
+						fmt.Print(" ")
+
 					}
 
 					for j := 0; j < len(line); j++ {
 						inputrune := rune(line[j])
+						result += Replace[inputrune][i]
 						fmt.Print(color, Replace[inputrune][i], Reset)
 
 					}
@@ -70,10 +79,12 @@ func PrintArt() string {
 				for i := 0; i < 8; i++ {
 					for l := 0; l < (TerminalLength/2 - AsciiLength/2); l++ {
 						result += " "
+						fmt.Print(" ")
 					}
 
 					for j := 0; j < len(line); j++ {
 						inputrune := rune(line[j])
+						result += Replace[inputrune][i]
 						fmt.Print(color, Replace[inputrune][i], Reset)
 
 					}

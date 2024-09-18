@@ -20,10 +20,10 @@ var (
 	substringexists bool
 )
 
-func ArgsManagement() (string, string, string, string, string, string, []string, string, bool, bool) {
+func ArgsManagement() (string, string, string, string, string, string, []string, string, bool) {
 	args := os.Args[1:]
 	if len(args) == 0 || len(args) > 6 {
-		log.Fatal("Usage: go run . [OUTPUT] [ALIGN] [STRING] [BANNER]\n\nEX: go run . --output=<fileName.txt> --align=center something standard")
+		log.Fatal("Usage: go run . [alignment] [output] [color] [substring] [STRING] [BANNER]\n\nEX: go run . --align=center --output=<fileName.txt> --color=red substring something standard")
 	}
 
 	// Usage instructions if no arguments or more than 2 arguments are provided
@@ -153,15 +153,19 @@ func ArgsManagement() (string, string, string, string, string, string, []string,
 		args = append(args, filename, align)
 		if len(args) == 5 {
 			filename = args[len(args)-2]
-			input = args[len(args)-3]
+			input = args[len(args)-4]
+			Banner = args[len(args)-3]
 			align = args[len(args)-1]
 
 		} else if len(args) == 6 {
 			filename = args[len(args)-2]
-			input = args[len(args)-3]
+			input = args[len(args)-4]
 			align = args[len(args)-1]
+			Banner = args[len(args)-3]
 			substring = args[index+1]
 			substringexists = true
+			fmt.Println(alignexists, bannerexists, outputexists, "color:", colorexists)
+
 		}
 
 	} else if outputexists && alignexists && !colorexists && !bannerexists {
@@ -175,11 +179,12 @@ func ArgsManagement() (string, string, string, string, string, string, []string,
 		input = args[len(args)-3]
 		Banner = args[len(args)-1]
 	} else if alignexists && !colorexists && !bannerexists && !outputexists {
-		args = append(args, filename, Banner)
-		filename = args[len(args)-2]
-		input = args[len(args)-3]
-		Banner = args[len(args)-1]
-
+		args = append(args, filename, Banner, color)
+		align = args[0]
+		input = args[1]
+		filename = args[2]
+		Banner = args[3]
+		color = args[4]
 	} else if bannerexists && !colorexists && !alignexists && !outputexists {
 		args = append(args, align, filename)
 		align = args[len(args)-2]
@@ -206,6 +211,18 @@ func ArgsManagement() (string, string, string, string, string, string, []string,
 
 		}
 
+	} else if !colorexists && !alignexists && !bannerexists && !outputexists {
+		args = append(args, align, filename, Banner, color)
+		if len(args) == 5 {
+			input = args[0]
+			align = args[1]
+			filename = args[2]
+			Banner = args[3]
+			color = args[4]
+
+		} else {
+			log.Fatal("Usage: go run . [alignment] [output] [color] [substring] [STRING] [BANNER]\n\nEX: go run . --align=center --output=<fileName.txt> --color=red substring something standard")
+		}
 	} else {
 		log.Fatal("Usage: go run . [alignment] [output] [color] [substring] [STRING] [BANNER]\n\nEX: go run . --align=center --output=<fileName.txt> --color=red substring something standard")
 	}
@@ -229,38 +246,52 @@ func ArgsManagement() (string, string, string, string, string, string, []string,
 			}
 		}
 	}
-	var inputsubstr string
-	j := 0
-	k := 0
-	var substr bool
-	for i := 0; i < len(inputsplit); i++ {
-		if inputsplit[i] != "" {
-			for k < len(inputsplit[i]) && j < len(substring) {
-				if inputsplit[i][k] == substring[j] {
-					inputsubstr += string(substring[j])
-					j++
-					k++
-				} else {
-					j = 0
-					k++
-					continue
-				}
-			}
 
-		} else {
-			continue
-		}
+	// var inputsubstr string
+	// j := 0
+	// k := 0
+	// var substr bool
+	// for i := 0; i < len(inputsplit); i++ {
+	// 	if inputsplit[i] != "" {
+	// 		for k < len(inputsplit[i]) && j < len(substring) {
+	// 			if inputsplit[i][k] == substring[j] {
+	// 				inputsubstr += string(substring[j])
+	// 				j++
+	// 				k++
+	// 			} else {
+	// 				j = 0
+	// 				k++
+	// 				continue
+	// 			}
+	// 		}
 
-		if inputsubstr == substring {
-			substr = true
-		} else {
-			substr = false
-			inputsubstr = ""
-		}
-	}
+	// 	} else {
+	// 		continue
+	// 	}
+
+	// 	if inputsubstr == substring {
+	// 		substr = true
+	// 	} else {
+	// 		substr = false
+	// 		inputsubstr = ""
+	// 	}
+	// }
+	// for _, line := range inputsplit {
+	// 	for k := 0; k+len(inputsubstr) < len(line); k += len(inputsubstr) {
+	// 		if substringexists && line[k:len(inputsubstr)] == inputsubstr {
+	// 			line = "é" + line[k:len(inputsubstr)] + "é"
+	// 			continue
+	// 		} else {
+	// 			line = line[k:len(inputsubstr)]
+	// 			continue
+	// 		}
+
+	// 	}
+	// 	fmt.Println("line is :", line)
+	// }
 
 	filename = strings.TrimPrefix(filename, "--output=")
 	color = strings.TrimPrefix(color, "--color=")
 	fmt.Println("color in args is :", color, "substring in args is :", substring, "inputsubstr in args is :", inputsubstr, colorexists, len(args))
-	return filename, align, Banner, color, substring, input, inputsplit, inputsubstr, substr, substringexists
+	return filename, align, Banner, color, substring, input, inputsplit, inputsubstr, substringexists
 }

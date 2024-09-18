@@ -6,7 +6,7 @@ import (
 
 func main() {
 	// we get the banner style and input text from user input
-	_, _, banner, _, _, _, _, _, _,_ := ascii.ArgsManagement() // we read the ASCII art characters from the chosen banner file
+	_, _, banner, _, _, _, _, _, _ := ascii.ArgsManagement() // we read the ASCII art characters from the chosen banner file
 	ascii.ReadText(banner)
 
 	// // // we populate the map with ASCII characters

@@ -34,7 +34,7 @@ func CalculateLength() (int, int, int, int) {
 
 	// Now for the ascii characters
 	// starting by getting all the values needed
-	_, _, Banner, _, _, _, inputsplit, _, _,_ = ArgsManagement()
+	_, _, Banner, _, _, _, inputsplit, _, _ = ArgsManagement()
 	Lines = ReadText(Banner)
 	Replace = Populate()
 
