@@ -18,10 +18,11 @@ func PrintArt() string {
 	// we start by checking if the user input only contains literal newlines
 	// if so we print newlines accordingly
 	for idx, line := range inputsplit {
-		if substringexists {
-			index := strings.Index(line, substring)
-
-			if index == -1 || !substringexists {
+		index := strings.Index(line, substring)
+		if !substringexists {
+			before, middle, after = line, "", ""
+		} else {
+			if index == -1 {
 				fmt.Println("Error : the substring wasn't found in the text")
 				before, middle, after = line, "", ""
 			} else {
@@ -29,8 +30,9 @@ func PrintArt() string {
 				middle = substring
 				after = line[index+len(substring):]
 			}
-			fmt.Println("before is : ", before, "middle is : ", middle, "after is : ", after)
+
 		}
+		fmt.Println("before is : ", before, "middle is : ", middle, "after is : ", after)
 
 		// also if there's empty strings resulting from the spliting we print a newline
 		if Checknewline(inputsplit) && idx != len(inputsplit)-1 {
@@ -49,14 +51,19 @@ func PrintArt() string {
 						} else {
 							inputrune := rune(before[j])
 							result += Replace[inputrune][i]
-							fmt.Print(Reset, Replace[inputrune][i], Reset)
+							fmt.Print(color, Replace[inputrune][i], Reset)
 
 						}
 					}
 					for j := 0; j < len(middle); j++ {
-						inputrune := rune(middle[j])
-						result += Replace[inputrune][i]
-						fmt.Print(color, Replace[inputrune][i], Reset)
+						if middle == "" {
+							continue
+						} else {
+							inputrune := rune(middle[j])
+							result += Replace[inputrune][i]
+							fmt.Print(color, Replace[inputrune][i], Reset)
+
+						}
 					}
 					for j := 0; j < len(after); j++ {
 						if after == "" {
@@ -116,7 +123,7 @@ func PrintArt() string {
 				for i := 0; i < 8; i++ {
 					for l := 0; l < (TerminalLength/2 - AsciiLength/2); l++ {
 						result += " "
-						fmt.Print("S")
+						fmt.Print(" ")
 					}
 
 					for j := 0; j < len(before); j++ {
@@ -125,7 +132,7 @@ func PrintArt() string {
 						} else {
 							inputrune := rune(before[j])
 							result += Replace[inputrune][i]
-							fmt.Print(Reset, Replace[inputrune][i], Reset)
+							fmt.Print(color, Replace[inputrune][i], Reset)
 
 						}
 					}
